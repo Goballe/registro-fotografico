@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte Diario Fotográfico</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header-table { width: 100%; border-collapse: collapse; }
+        .header-table td, .header-table th { border: 1px solid #333; padding: 5px; font-size: 12px; }
+        .header-logo { width: 140px; text-align: center; }
+        .header-title { text-align: center; font-size: 18px; font-weight: bold; }
+        .header-right { text-align: right; font-size: 14px; font-weight: bold; }
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        .info-table td, .info-table th { border: 1px solid #333; padding: 4px; font-size: 12px; }
+        .info-table th { background: #f3f3f3; font-weight: bold; }
+        .fotos-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .fotos-table td, .fotos-table th { border: 1px solid #333; text-align: center; vertical-align: middle; font-size: 12px; }
+        .foto-pdf { max-width: 95%; max-height: 230px; margin: 6px auto; display: block; }
+        .foto-label { background: #f3f3f3; font-weight: bold; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <table class="header-table">
+        <tr>
+            <td class="header-logo" rowspan="2">
+                <!-- Logo (puedes reemplazar src con tu logo real) -->
+                <img src="file:///C:/Users/Giovany Oballe/Documents/desarrollo/Registro Fotografico/app/static/img/logo_jlv.jpg" alt="Logo" style="width:120px; height:40px;">
+            </td>
+            <td class="header-title" colspan="4">REPORTE DIARIO FOTOGRÁFICO</td>
+            <td class="header-right">F-30-82</td>
+        </tr>
+        <tr>
+            <td colspan="4"></td>
+            <td class="header-right"></td>
+        </tr>
+    </table>
+    <!-- Datos principales -->
+    <table class="info-table">
+        <tr>
+            <th>Proyecto:</th>
+            <td>{{ reporte.proyecto }}</td>
+            <th>Código del proyecto:</th>
+            <td>{{ reporte.codigo_proyecto }}</td>
+            <th>Versión del reporte:</th>
+            <td>{{ reporte.version_reporte }}</td>
+            <th>REPORTE N°</th>
+            <td>{{ reporte.reporte_numero }}</td>
+        </tr>
+        <tr>
+            <th>Cliente:</th>
+            <td>{{ reporte.cliente }}</td>
+            <th>Contratista:</th>
+            <td>{{ reporte.contratista }}</td>
+            <th>Fecha de emisión:</th>
+            <td>{{ reporte.fecha_emision|date:'j \d\e F \d\e Y' }}</td>
+            <th>Mes Actual de Obra:</th>
+            <td>{{ reporte.mes_actual_obra }}</td>
+        </tr>
+        <tr>
+            <th>Inicio de la Supervisión:</th>
+            <td>{{ reporte.inicio_supervision|date:'j \d\e F \d\e Y' }}</td>
+            <th>Elaborado por:</th>
+            <td>{{ reporte.elaborado_por }}</td>
+            <th>Revisado por:</th>
+            <td>{{ reporte.revisado_por }}</td>
+            <th>Descripción:</th>
+            <td colspan="1">{{ reporte.descripcion }}</td>
+        </tr>
+    </table>
+    <!-- Tabla de fotos 2x2 -->
+    <table class="fotos-table">
+        <tr>
+            <th class="foto-label">Fotografía 01</th>
+            <th class="foto-label">Fotografía 02</th>
+        </tr>
+        <tr>
+            <td>{% if reporte.foto1 %}<img src="file:///{{ foto1_path_fixed }}" class="foto-pdf" alt="Foto 1">{% endif %}</td>
+            <td>{% if reporte.foto2 %}<img src="file:///{{ foto2_path_fixed }}" class="foto-pdf" alt="Foto 2">{% endif %}</td>
+        </tr>
+        <tr>
+            <th class="foto-label">Fotografía 03</th>
+            <th class="foto-label">Fotografía 04</th>
+        </tr>
+        <tr>
+            <td>{% if reporte.foto3 %}<img src="file:///{{ foto3_path_fixed }}" class="foto-pdf" alt="Foto 3">{% endif %}</td>
+            <td>{% if reporte.foto4 %}<img src="file:///{{ foto4_path_fixed }}" class="foto-pdf" alt="Foto 4">{% endif %}</td>
+        </tr>
+    </table>
+</body>
+</html>

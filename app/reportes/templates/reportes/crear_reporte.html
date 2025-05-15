@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Reporte Fotográfico</title>
+</head>
+<body>
+    <h1>Crear Reporte Fotográfico</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="id_proyecto">Proyecto:</label>
+            {{ form.proyecto }}
+        </div>
+        <div>
+            <label for="id_cliente">Cliente:</label>
+            {{ form.cliente }}
+        </div>
+        <div>
+            <label for="id_contratista">Contratista:</label>
+            {{ form.contratista }}
+        </div>
+        <div>
+            <label for="id_codigo_proyecto">Código del proyecto:</label>
+            {{ form.codigo_proyecto }}
+        </div>
+        <div>
+            <label for="id_version_reporte">Versión del reporte:</label>
+            {{ form.version_reporte }}
+        </div>
+        <div>
+            <label for="id_fecha_emision">Fecha de emisión:</label>
+            {{ form.fecha_emision }}
+        </div>
+        <div>
+            <label for="id_elaborado_por">Elaborado por:</label>
+            {{ form.elaborado_por }}
+        </div>
+        <div>
+            <label for="id_revisado_por">Revisado por:</label>
+            {{ form.revisado_por }}
+        </div>
+        <div>
+            <label for="id_inicio_supervision">Inicio de la Supervisión:</label>
+            {{ form.inicio_supervision }}
+        </div>
+        <div>
+            <label for="id_mes_actual_obra">Mes Actual de Obra:</label>
+            {{ form.mes_actual_obra }}
+        </div>
+        <div>
+            <label for="id_reporte_numero">Reporte N°:</label>
+            {{ form.reporte_numero }}
+        </div>
+        <div>
+            <label for="id_descripcion">Descripción:</label>
+            {{ form.descripcion }}
+        </div>
+        <div>
+            <label for="id_foto1">Fotografía 01:</label>
+            {{ form.foto1 }}
+        </div>
+        <div>
+            <label for="id_foto2">Fotografía 02:</label>
+            {{ form.foto2 }}
+        </div>
+        <div>
+            <label for="id_foto3">Fotografía 03:</label>
+            {{ form.foto3 }}
+        </div>
+        <div>
+            <label for="id_foto4">Fotografía 04:</label>
+            {{ form.foto4 }}
+        </div>
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'lista_reportes' %}">Ver reportes</a>
+</body>
+</html>

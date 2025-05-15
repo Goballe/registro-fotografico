@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Reportes</title>
+</head>
+<body>
+    <h1>Reportes Fotográficos</h1>
+    <a href="{% url 'crear_reporte' %}">Crear nuevo reporte</a>
+    <ul>
+        {% for reporte in reportes %}
+        <li>
+            <strong>{{ reporte.proyecto }} - {{ reporte.fecha }}</strong><br>
+            {{ reporte.descripcion }}<br>
+            {% if reporte.foto1 %}
+                <img src="{{ reporte.foto1.url }}" width="200" alt="Foto 1">
+            {% endif %}
+            {% if reporte.foto2 %}
+                <img src="{{ reporte.foto2.url }}" width="200" alt="Foto 2">
+            {% endif %}
+            {% if reporte.foto3 %}
+                <img src="{{ reporte.foto3.url }}" width="200" alt="Foto 3">
+            {% endif %}
+            {% if reporte.foto4 %}
+                <img src="{{ reporte.foto4.url }}" width="200" alt="Foto 4">
+            {% endif %}
+            <br>
+            <a href="{% url 'reporte_pdf' reporte.id %}" target="_blank">Descargar PDF</a>
+        </li>
+        {% empty %}
+        <li>No hay reportes aún.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

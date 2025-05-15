@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: registro_fotografico
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: clave
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
