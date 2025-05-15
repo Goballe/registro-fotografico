@@ -1,3 +1,5 @@
-Django>=4.2
+Django>=4.2,<5.0
 psycopg2-binary
-WeasyPrint
+gunicorn
+xhtml2pdf
+WeasyPrint>=60.0

@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'registro_fotografico.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'registro_fotografico',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -115,7 +119,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# STATIC_ROOT = BASE_DIR / 'app' / 'static'  # Usar solo en producción con collectstatic
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -123,5 +132,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
+MEDIA_ROOT = BASE_DIR / 'app' / 'media'

@@ -1,34 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Reportes</title>
-</head>
-<body>
-    <h1>Reportes Fotográficos</h1>
-    <a href="{% url 'crear_reporte' %}">Crear nuevo reporte</a>
-    <ul>
-        {% for reporte in reportes %}
-        <li>
-            <strong>{{ reporte.proyecto }} - {{ reporte.fecha }}</strong><br>
-            {{ reporte.descripcion }}<br>
-            {% if reporte.foto1 %}
-                <img src="{{ reporte.foto1.url }}" width="200" alt="Foto 1">
-            {% endif %}
-            {% if reporte.foto2 %}
-                <img src="{{ reporte.foto2.url }}" width="200" alt="Foto 2">
-            {% endif %}
-            {% if reporte.foto3 %}
-                <img src="{{ reporte.foto3.url }}" width="200" alt="Foto 3">
-            {% endif %}
-            {% if reporte.foto4 %}
-                <img src="{{ reporte.foto4.url }}" width="200" alt="Foto 4">
-            {% endif %}
-            <br>
-            <a href="{% url 'reporte_pdf' reporte.id %}" target="_blank">Descargar PDF</a>
-        </li>
-        {% empty %}
-        <li>No hay reportes aún.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Lista de Reportes{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Reportes Fotográficos</h2>
+    <a href="{% url 'crear_reporte' %}" class="btn btn-success">Crear nuevo reporte</a>
+</div>
+<table class="table table-striped table-bordered align-middle">
+    <thead class="table-primary">
+        <tr>
+            <th>Proyecto</th>
+            <th>Fecha de emisión</th>
+            <th>Descripción</th>
+            <th>Fotos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for reporte in reportes %}
+        <tr>
+            <td><strong>{{ reporte.proyecto }}</strong></td>
+            <td>{{ reporte.fecha_emision|date:'Y-m-d' }}</td>
+            <td>{{ reporte.descripcion|truncatechars:50 }}</td>
+            <td>
+                {% if reporte.foto1 %}<img src="{{ reporte.foto1.url }}" width="60" class="img-thumbnail me-1 mb-1" alt="Foto 1">{% endif %}
+                {% if reporte.foto2 %}<img src="{{ reporte.foto2.url }}" width="60" class="img-thumbnail me-1 mb-1" alt="Foto 2">{% endif %}
+                {% if reporte.foto3 %}<img src="{{ reporte.foto3.url }}" width="60" class="img-thumbnail me-1 mb-1" alt="Foto 3">{% endif %}
+                {% if reporte.foto4 %}<img src="{{ reporte.foto4.url }}" width="60" class="img-thumbnail me-1 mb-1" alt="Foto 4">{% endif %}
+            </td>
+            <td>
+                <a href="{% url 'reporte_pdf' reporte.id %}" target="_blank" class="btn btn-sm btn-outline-primary">Ver PDF</a>
+                <a href="{% url 'borrar_reporte' reporte.id %}" onclick="return confirm('¿Seguro que deseas borrar este reporte?');" class="btn btn-sm btn-outline-danger ms-1">Borrar</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5" class="text-center">No hay reportes aún.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

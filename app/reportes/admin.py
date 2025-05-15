@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import ReporteFotografico
 
-# Register your models here.
+admin.site.register(ReporteFotografico)

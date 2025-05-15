@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ReporteForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -20,21 +20,24 @@ def lista_reportes(request):
     reportes = ReporteFotografico.objects.all().order_by('-fecha_emision')
     return render(request, 'reportes/lista_reportes.html', {'reportes': reportes})
 
+def borrar_reporte(request, reporte_id):
+    reporte = get_object_or_404(ReporteFotografico, id=reporte_id)
+    reporte.delete()
+    return redirect('lista_reportes')
+
 import io
 
 def reporte_pdf(request, reporte_id):
     reporte = ReporteFotografico.objects.get(id=reporte_id)
 
-    # Renderizar la plantilla HTML con datos del reporte
-    # Preparar rutas de imágenes con slashes para Windows
-    foto1_path_fixed = reporte.foto1.path.replace('\\', '/') if reporte.foto1 else ''
-    foto2_path_fixed = reporte.foto2.path.replace('\\', '/') if reporte.foto2 else ''
-    foto3_path_fixed = reporte.foto3.path.replace('\\', '/') if reporte.foto3 else ''
-    foto4_path_fixed = reporte.foto4.path.replace('\\', '/') if reporte.foto4 else ''
+    # Preparar rutas absolutas para las imágenes
+    foto1_path_fixed = reporte.foto1.path if reporte.foto1 else ''
+    foto2_path_fixed = reporte.foto2.path if reporte.foto2 else ''
+    foto3_path_fixed = reporte.foto3.path if reporte.foto3 else ''
+    foto4_path_fixed = reporte.foto4.path if reporte.foto4 else ''
 
     from django.utils import translation
 
-    # Forzar idioma español en la generación del PDF
     with translation.override('es'):
         context = {
             'reporte': reporte,
@@ -45,25 +48,13 @@ def reporte_pdf(request, reporte_id):
         }
         html_string = render_to_string('reportes/reporte_pdf.html', context)
 
-        # Generar el PDF en memoria
+        # Usar WeasyPrint para generar el PDF
         pdf_io = io.BytesIO()
-        HTML(string=html_string).write_pdf(target=pdf_io)
+        HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf(target=pdf_io)
         pdf_io.seek(0)
         pdf = pdf_io.read()
 
-        # Enviar el PDF como respuesta
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = f'filename="reporte_{reporte.id}.pdf"'
+        response['Content-Disposition'] = f'inline; filename="reporte_{reporte_id}.pdf"'
         return response
-    html_string = render_to_string('reportes/reporte_pdf.html', context)
-
-    # Generar el PDF en memoria
-    pdf_io = io.BytesIO()
-    HTML(string=html_string).write_pdf(target=pdf_io)
-    pdf_io.seek(0)
-    pdf = pdf_io.read()
-
-    # Enviar el PDF como respuesta
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="reporte_{reporte.id}.pdf"'
     return response

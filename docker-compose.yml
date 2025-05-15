@@ -1,26 +1,38 @@
-version: '3.8'
+version: '3.9'
 
 services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: registro_fotografico
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
   web:
     build: .
+    working_dir: /code/app
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
-      - ./media:/app/media
+      - ./app:/code/app
+      - ./app/media:/code/media
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - DEBUG=True
-
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: registro_fotografico
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: clave
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=*
+      - POSTGRES_DB=registro_fotografico
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
 
 volumes:
   postgres_data:
+
+  media_volume:

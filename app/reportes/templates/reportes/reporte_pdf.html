@@ -20,12 +20,13 @@
     </style>
 </head>
 <body>
+
     <!-- Encabezado -->
     <table class="header-table">
         <tr>
             <td class="header-logo" rowspan="2">
                 <!-- Logo (puedes reemplazar src con tu logo real) -->
-                <img src="file:///C:/Users/Giovany Oballe/Documents/desarrollo/Registro Fotografico/app/static/img/logo_jlv.jpg" alt="Logo" style="width:120px; height:40px;">
+                <img src="file:///code/app/static/img/logo_jlv.jpg" alt="Logo" style="width:120px; height:40px;">
             </td>
             <td class="header-title" colspan="4">REPORTE DIARIO FOTOGRÁFICO</td>
             <td class="header-right">F-30-82</td>
@@ -75,16 +76,24 @@
             <th class="foto-label">Fotografía 02</th>
         </tr>
         <tr>
-            <td>{% if reporte.foto1 %}<img src="file:///{{ foto1_path_fixed }}" class="foto-pdf" alt="Foto 1">{% endif %}</td>
-            <td>{% if reporte.foto2 %}<img src="file:///{{ foto2_path_fixed }}" class="foto-pdf" alt="Foto 2">{% endif %}</td>
+            <td>
+    {% if foto1_path_fixed %}<img src="file://{{ foto1_path_fixed }}" class="foto-pdf" alt="Foto 1">{% endif %}
+</td>
+            <td>
+    {% if foto2_path_fixed %}<img src="file://{{ foto2_path_fixed }}" class="foto-pdf" alt="Foto 2">{% endif %}
+</td>
         </tr>
         <tr>
             <th class="foto-label">Fotografía 03</th>
             <th class="foto-label">Fotografía 04</th>
         </tr>
         <tr>
-            <td>{% if reporte.foto3 %}<img src="file:///{{ foto3_path_fixed }}" class="foto-pdf" alt="Foto 3">{% endif %}</td>
-            <td>{% if reporte.foto4 %}<img src="file:///{{ foto4_path_fixed }}" class="foto-pdf" alt="Foto 4">{% endif %}</td>
+            <td>
+    {% if foto3_path_fixed %}<img src="file://{{ foto3_path_fixed }}" class="foto-pdf" alt="Foto 3">{% endif %}
+</td>
+            <td>
+    {% if foto4_path_fixed %}<img src="file://{{ foto4_path_fixed }}" class="foto-pdf" alt="Foto 4">{% endif %}
+</td>
         </tr>
     </table>
 </body>
